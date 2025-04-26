@@ -1,16 +1,18 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import {Button} from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {ContactRow} from "@/components/Services/main/ContactList/Contacts/contacts";
 
 
 interface Props {
-    row: any;
+    row: ContactRow;
     closeModal: () => void
 }
 
- const ManualContacts =()=> {
+ const EditContacts =({closeModal, row} : Props)=> {
+     console.log(closeModal, row)
     return (
         <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-sm">
             <h2 className="text-2xl font-bold text-center mb-6">Create New Contact</h2>
@@ -76,4 +78,4 @@ interface Props {
 }
 
 
-export default ManualContacts
+export default EditContacts

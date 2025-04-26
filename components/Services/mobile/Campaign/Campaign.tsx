@@ -1,5 +1,4 @@
 import React from "react";
-import { Search } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import campaignOne from "@/public/assets/images/campaign/one.png"

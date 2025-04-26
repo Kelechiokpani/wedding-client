@@ -1,11 +1,15 @@
 
 'use client'
-import React, {useState} from "react";
+import React from "react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 
 
-const ManualContacts = ({setManual}:any)=> {
+interface ManualContactsProps {
+    setManual: (value: boolean) => void;
+}
+
+const ManualContacts = ({setManual}:ManualContactsProps)=> {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

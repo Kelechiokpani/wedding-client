@@ -1,31 +1,27 @@
 "use client";
-import {useRouter, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import React, {useEffect, useMemo, useState, useRef} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {ListIcons} from "@/public/assets/icons";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
-import {FileUp, MoreVertical, Plus, Search, Upload} from "lucide-react";
+import {FileUp, MoreVertical, Plus, Upload} from "lucide-react";
 import BaseTable from "@/components/molecules/Base-Table";
 import BaseModal from "@/components/molecules/BaseModal";
-import EditList from "@/components/Services/main/ContactList/EditList";
 import Delete from "@/components/molecules/Base-Delete";
 import ManualContacts from "@/components/Services/main/ContactList/Contacts/ManualContacts";
 import {Pagination} from "@/utils/Pagination";
 import {useDebouncedValue} from "@/utils/useDebouncedSearch";
 import {SearchInput} from "@/utils/SearchInput";
 import ImportContacts from "@/components/Services/main/ContactList/Contacts/ImportContacts";
-import { CSVLink } from "react-csv";
-import jsPDF from "jspdf";
 import "jspdf-autotable";
-import autoTable from "jspdf-autotable";
 import {exportContactsToPDF} from "@/utils/exportToPdf";
 import {exportToXLSX} from "@/utils/exportToCsv";
+import EditContacts from "@/components/Services/main/ContactList/Contacts/EditContact";
 
 
 export interface ContactRow {
     id: string;
-    icon: React.ComponentType | any;
+    icon: React.ComponentType;
     firstName: string;
      lastName: string;
     email: string;
@@ -47,7 +43,6 @@ const Contacts: React.FC<BaseTableProps> = ({data}) => {
     const [imports, setImports] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const router = useRouter();
-    const csvLinkRef = useRef<any>();
 
 
     const handleAction = (row: ContactRow, action: 'edit' | 'delete') => {
@@ -62,7 +57,7 @@ const Contacts: React.FC<BaseTableProps> = ({data}) => {
 
     const columns = [
         { header: "#", accessor: "icon" as keyof ContactRow,
-            render: (item: ContactRow) => <span>{ListIcons.dashboard}</span>, // ✅ Now TypeScript knows item.icon exists
+            render: () => <span>{ListIcons.dashboard}</span>,
         },
         { header: "First Name", accessor: "firstName" as keyof ContactRow },
         { header: "Last Name", accessor: "lastName" as keyof ContactRow },
@@ -133,7 +128,7 @@ const Contacts: React.FC<BaseTableProps> = ({data}) => {
 
 
 
-    const exportPDF = (data: any[]) => {
+    const exportPDF = (data: ContactRow[]) => {
         if (typeof window !== "undefined") {
             exportContactsToPDF(data);
         }
@@ -236,7 +231,7 @@ const Contacts: React.FC<BaseTableProps> = ({data}) => {
                            closeOnOutsideClick={false}
                 >
                     {selectedRow && (
-                        <EditList
+                        <EditContacts
                             closeModal={closeModal}
                             row={selectedRow}
                         />
@@ -253,7 +248,7 @@ const Contacts: React.FC<BaseTableProps> = ({data}) => {
                     {selectedRow && (
                         <Delete
                             closeModal={closeModal}
-                            row={selectedRow}
+                            row={selectedRow.id}
                         />
                     )}
                 </BaseModal>

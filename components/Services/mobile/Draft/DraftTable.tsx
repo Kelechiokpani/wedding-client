@@ -2,13 +2,11 @@
 import BaseTable from "@/components/molecules/Base-Table";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
-import {MoreVertical, Plus, Search, Upload} from "lucide-react";
+import {MoreVertical, Plus} from "lucide-react";
 import {ListIcons} from "@/public/assets/icons";
 import BaseModal from "@/components/molecules/BaseModal";
 import React, {useEffect, useMemo, useState} from "react";
-import CreateList from "@/components/Services/main/ContactList/CreateList";
 import Link from "next/link";
-import EditList from "@/components/Services/main/ContactList/EditList";
 import Delete from "@/components/molecules/Base-Delete";
 import {Pagination} from "@/utils/Pagination";
 import {useDebouncedValue} from "@/utils/useDebouncedSearch";
@@ -18,11 +16,11 @@ import {SearchInput} from "@/utils/SearchInput";
 
 export interface DraftLists {
     id: string;
-    icon?: React.ComponentType | any;
+    icon?: React.ComponentType;
     count: string;
     senderId: string;
     message: string;
-    recipients: string[];
+    recipients: string[] ;
     campaign: string
     date: string;
 
@@ -87,7 +85,7 @@ const DraftList: React.FC<BaseTableProps>  =  ({data})=>{
 
     const columns = [
         { header: "#", accessor: "icon" as keyof DraftLists,
-            render: (item: DraftLists) => <span>{ListIcons.dashboard}</span>, // ✅ Now TypeScript knows item.icon exists
+            render: () => <span>{ListIcons.dashboard}</span>,
         },
         { header: "Campaign", accessor: "campaign" as keyof DraftLists },
         { header: "Sender ID", accessor: "senderId" as keyof DraftLists },
@@ -177,7 +175,9 @@ const DraftList: React.FC<BaseTableProps>  =  ({data})=>{
 
             <div>
                 <BaseModal width="max-w-lg" isOpen={openList} closeModal={() => setOpenList(false)} title="Create Contact List">
-                    <CreateList  setOpenList={setOpenList} />
+                    <div>
+                        New Draft Message
+                    </div>
                 </BaseModal>
                 <BaseModal width="max-w-lg"
                            isOpen={modalType === 'edit'}
@@ -186,10 +186,13 @@ const DraftList: React.FC<BaseTableProps>  =  ({data})=>{
                            closeOnOutsideClick={false}
                 >
                     {selectedRow && (
-                        <EditList
-                            closeModal={closeModal}
-                            row={selectedRow}
-                        />
+                        <div>
+                            Edit Draft Message
+                        </div>
+                        // <EditList
+                        //     closeModal={closeModal}
+                        //     row={selectedRow}
+                        // />
                     )}
                 </BaseModal>
                 <BaseModal width="max-w-lg"
@@ -202,7 +205,7 @@ const DraftList: React.FC<BaseTableProps>  =  ({data})=>{
                     {selectedRow && (
                         <Delete
                             closeModal={closeModal}
-                            row={selectedRow}
+                            row={selectedRow.id}
                         />
                     )}
                 </BaseModal>

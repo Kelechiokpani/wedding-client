@@ -9,19 +9,9 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import {ListIcons} from "@/public/assets/icons";
-import {CampaignType} from "@/utils/utils";
+import {CampaignType, ContactListing} from "@/utils/utils";
+import {ListRow} from "@/components/Services/main/ContactList/ContactList";
 
-
-
-const contacts = [
-    { id:"1001", icon: ListIcons.dashboard, name: "Founders Program", count: 22, date: "12/Feb/2022" },
-    { id:"1002",  icon: ListIcons.dashboard, name: "Whatsapp clients", count: 22, date: "12/Feb/2022" },
-    { id:"1003",  icon: ListIcons.dashboard, name: "Mobile Texting Client", count: 22, date: "12/Feb/2022" },
-    { id:"1004",  icon: ListIcons.dashboard, name: "Corporate Clients", count: 22, date: "12/Feb/2022" },
-    { id:"1005",  icon: ListIcons.dashboard, name: "Small Business", count: 22, date: "12/Feb/2022" },
-    { id:"1006",  icon: ListIcons.dashboard, name: "Employee", count: 22, date: "12/Feb/2022" },
-];
 
 const SenderId = [
     {id:"1001", name: "Default sender setting (recommended)"},
@@ -36,7 +26,7 @@ const SmsMessage = ( )=>{
     const router = useRouter();
     const [message, setMessage] = useState("");
     const [to, setTo] = useState<string[]>([]);
-    const [listValue, setListValue] = useState<string | any []>([]);
+    const [selectedList, setSelectedList] = useState<ListRow | null>(null);
     const [senderId, setSenderId] = useState('');
     const [campaignType, setCampaignType] = useState('');
 
@@ -60,6 +50,14 @@ const SmsMessage = ( )=>{
         setTo(to.filter((_, i) => i !== index));
     };
 
+    const handleListSelect = (value: string) => {
+        const foundList = ContactListing.find(list => list.name === value);
+        if (foundList) {
+            setSelectedList(foundList);
+            // If you want to set the contacts from the list to 'to' state:
+            // setTo([...to, foundList.name]); // Or whatever logic you need
+        }
+    };
 
     return(
         <div>
@@ -131,25 +129,31 @@ const SmsMessage = ( )=>{
                                 </div>
                             </div>
                             ) : (
-                            <div>
-                                <Label htmlFor="to" className="block mb-2 font-semibold">Select Contact List</Label>
-                                <Select onValueChange={(value) => setListValue([value])}>
-                                    <SelectTrigger className='p-6'>
-                                        <SelectValue className='p-8' placeholder="Pick a contact list"/>
-                                    </SelectTrigger>
-                                    <SelectContent >
-                                        {contacts.map((list, index) => (
-                                            <SelectItem className='mb-2 cursor-pointer' key={index}
-                                                        onChange={(e) => setListValue(list.name)}
-                                                        value={list?.name} >{list?.name}</SelectItem>
-                                             ))}
-                                    </SelectContent>
-                                </Select>
-                                <div className="text-right text-xs text-muted-foreground pt-1">
-                                    Recipients: {to?.length}
-                                </div>
-                            </div>
-                           )}
+                              <div>
+                                  <Label htmlFor="to" className="block mb-2 font-semibold">
+                                      Select Contact List
+                                  </Label>
+                                  <Select onValueChange={handleListSelect}>
+                                      <SelectTrigger className="p-6">
+                                          <SelectValue placeholder="Pick a contact list"/>
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                          {ContactListing.map((list) => (
+                                              <SelectItem
+                                                  className="mb-2 cursor-pointer"
+                                                  key={list.id}
+                                                  value={list.name}
+                                              >
+                                                  {list.name}
+                                              </SelectItem>
+                                          ))}
+                                      </SelectContent>
+                                  </Select>
+                                  <div className="text-right text-xs text-muted-foreground pt-1">
+                                      Recipients: {selectedList?.count || 0}
+                                  </div>
+                              </div>
+                          )}
 
 
                            {/* Sender ID selection */}
@@ -172,7 +176,8 @@ const SmsMessage = ( )=>{
                                    </Select>
                                </div>
                                <div className="mb-8 mt-8 w-full">
-                                   <Label htmlFor="from" className="block mb-2 font-semibold">Select (Campaign Type)</Label>
+                                   <Label htmlFor="from" className="block mb-2 font-semibold">Select (Campaign
+                                       Type)</Label>
                                    <Select value={campaignType} onValueChange={setCampaignType}>
                                        <SelectTrigger className='p-6'>
                                            <SelectValue placeholder="Select Campaign Type"/>

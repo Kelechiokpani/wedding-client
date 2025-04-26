@@ -1,6 +1,5 @@
 'use client'
 import React from "react";
-import NewMessage from "@/components/Services/mobile/Inbox/NewMessage";
 
 
 export default function Page() {

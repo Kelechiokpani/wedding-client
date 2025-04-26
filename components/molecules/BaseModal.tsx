@@ -18,7 +18,6 @@ const BaseModal: React.FC<BaseModalProps> = ({
                                                  closeModal,
                                                  title,
                                                  children,
-                                                 showCloseIcon = true,
                                                  width,
                                                  closeOnOutsideClick = true
                                              }) => {

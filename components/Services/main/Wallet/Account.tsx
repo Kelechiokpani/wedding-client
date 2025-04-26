@@ -12,7 +12,7 @@ interface AccountCardProps {
 }
 
 
-export function AccountCard({bankName, accountName, accountNumber, balance, availableBalance,}: AccountCardProps) {
+export function AccountCard({bankName, accountName, accountNumber, balance}: AccountCardProps) {
 
     return (
         <div className="bg-orange-100 rounded shadow-lg py-6 px-8 transition-shadow">

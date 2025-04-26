@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import AuthLayout from "@/components/layouts/authLayout";
 import { useRouter } from "nextjs-toploader/app";
@@ -8,9 +7,9 @@ const Index = () => {
     const [step, setStep] = useState(1);
     const router = useRouter();
 
-    const handleNextStep = () => {
-        setStep((prev) => prev + 1);
-    };
+    // const handleNextStep = () => {
+    //     setStep((prev) => prev + 1);
+    // };
 
     const handleStepBack = () => {
         if (step > 1) {
@@ -20,13 +19,13 @@ const Index = () => {
         }
     };
 
-    const handleSkip = () => {
-        router.push("/");
-    };
+    // const handleSkip = () => {
+    //     router.push("/");
+    // };
 
-    const handleFinalSubmit = () => {
-        router.push("/");
-    };
+    // const handleFinalSubmit = () => {
+    //     router.push("/");
+    // };
 
     return (
         <AuthLayout loginBtn showBackArrow handleStepBack={handleStepBack}>

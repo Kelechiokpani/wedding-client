@@ -1,6 +1,5 @@
 'use client'
 import Image, { StaticImageData } from "next/image";
-import Chart2 from "@/public/assets/images/main/_Chart2.png";
 
 
 interface DashboardCardProps {

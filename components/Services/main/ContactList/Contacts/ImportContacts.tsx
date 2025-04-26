@@ -5,7 +5,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import {extractContacts} from "@/utils/extractFile";
 
-const ImportContacts = ({setImports}:any)=> {
+interface ImportContactsProps {
+    setImports: (value: boolean) => void;
+}
+
+const ImportContacts = ({setImports}:ImportContactsProps)=> {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [termsAgreed, setTermsAgreed] = useState(false);
@@ -128,7 +132,7 @@ const ImportContacts = ({setImports}:any)=> {
 
             {/* Update Button */}
             <div className="flex justify-center">
-                <Button onClick={setImports}
+                <Button onClick={handleSubmit}
                     className="px-6 py-3 bg-orange-500 hover:bg-blue-700"
                     disabled={!selectedFile || !termsAgreed}
                 >

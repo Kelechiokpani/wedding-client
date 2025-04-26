@@ -1,21 +1,18 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import {Button} from "@/components/ui/button";
 
 
-interface Props {
-    row: any;
-    closeModal: () => void
+interface DeleteProps {
+    row: string;
+    closeModal: () => void;
 }
 
-const Delete = ({closeModal, row} : Props) => {
-    const [ListName, setListName] = useState(row.name);
-
+const Delete = ({ closeModal, row }: DeleteProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission logic here
-        console.log({ ListName });
-        // setEditList(false)
+        console.log(row, "row")
+        closeModal();
     };
 
     console.log(row,"row data")
@@ -27,8 +24,7 @@ const Delete = ({closeModal, row} : Props) => {
                 <div className="text-center">
                     <p className='text-red-500'>Are you sure you want to delete ?</p>
 
-                    <p className="mt-6 font-bold ">"{row.name}"</p>
-
+                    <p className="mt-6 font-bold ">{row}</p>
                 </div>
                 {/* Buttons */}
                 <div className="flex justify-end space-x-3 pt-4">

@@ -1,12 +1,10 @@
 'use client'
 import BaseTable from "@/components/molecules/Base-Table";
 import {Button} from "@/components/ui/button";
-import {MoreVertical, Plus, Search, Upload} from "lucide-react";
+import {Plus} from "lucide-react";
 import {ListIcons} from "@/public/assets/icons";
 import BaseModal from "@/components/molecules/BaseModal";
 import React, {useEffect, useMemo, useState} from "react";
-import Link from "next/link";
-import EditList from "@/components/Services/main/ContactList/EditList";
 import Delete from "@/components/molecules/Base-Delete";
 import {Pagination} from "@/utils/Pagination";
 import {useDebouncedValue} from "@/utils/useDebouncedSearch";
@@ -17,7 +15,7 @@ import CreateSenderID from "@/components/Services/mobile/Sender/Create-SenderId"
 
 export interface senderLists {
     id: string;
-    icon?: React.ComponentType | any;
+    icon?: React.ComponentType;
     senderId: string;
     date: string;
     status: string;
@@ -28,7 +26,6 @@ interface BaseTableProps {
     data: senderLists[];
     setIsOpen?: (val: boolean) => void;
 }
-
 
 
 
@@ -69,10 +66,10 @@ const SenderList: React.FC<BaseTableProps>  =  ({data})=>{
     };
 
 
-    const handleAction = (row: senderLists, action: 'edit' | 'delete') => {
-        setSelectedRow(row);
-        setModalType(action);
-    };
+    // const handleAction = (row: senderLists, action: 'edit' | 'delete') => {
+    //     setSelectedRow(row);
+    //     setModalType(action);
+    // };
 
     const closeModal = () => {
         setSelectedRow(null);
@@ -81,9 +78,8 @@ const SenderList: React.FC<BaseTableProps>  =  ({data})=>{
 
     const columns = [
         { header: "#", accessor: "icon" as keyof senderLists,
-            render: (item: senderLists) => <span>{ListIcons.dashboard}</span>, // ✅ Now TypeScript knows item.icon exists
+            render: () => <span>{ListIcons.dashboard}</span>
         },
-
         { header: "Sender ID", accessor: "senderId" as keyof senderLists },
         { header: "Date", accessor: "date" as keyof senderLists },
         { header: "Status", accessor: "status" as keyof senderLists,
@@ -192,10 +188,13 @@ const SenderList: React.FC<BaseTableProps>  =  ({data})=>{
                            closeOnOutsideClick={false}
                 >
                     {selectedRow && (
-                        <EditList
-                            closeModal={closeModal}
-                            row={selectedRow}
-                        />
+                        <div>
+                            Edit Sender ID
+                        </div>
+                        // <EditList
+                        //     closeModal={closeModal}
+                        //     row={selectedRow}
+                        // />
                     )}
                 </BaseModal>
                 <BaseModal width="max-w-lg"
@@ -208,7 +207,7 @@ const SenderList: React.FC<BaseTableProps>  =  ({data})=>{
                     {selectedRow && (
                         <Delete
                             closeModal={closeModal}
-                            row={selectedRow}
+                            row={selectedRow.id}
                         />
                     )}
                 </BaseModal>

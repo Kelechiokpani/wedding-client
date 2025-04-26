@@ -104,13 +104,43 @@ export default function ChatUI() {
         return users.filter(data =>
             data.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
         );
-    }, [users, debouncedSearchTerm]);
+    }, [debouncedSearchTerm]);
+    // }, [users, debouncedSearchTerm]);
+
+    // const handleSend = () => {
+    //     if (!newMessage.trim()) return;
+    //     const updatedMessages = [...selectedUser.messages, { from: "admin", text: newMessage, time: "Now" }];
+    //     const updatedUser = { ...selectedUser, messages: updatedMessages };
+    //     setSelectedUser(updatedUser);
+    // };
 
     const handleSend = () => {
         if (!newMessage.trim()) return;
-        const updatedMessages:any = [...selectedUser.messages, { from: "admin", text: newMessage, time: "Now" }];
-        const updatedUser:any = { ...selectedUser, messages: updatedMessages };
+
+        // Create formatted time (e.g., "10:30am")
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        const formattedHours = hours % 12 || 12;
+        const formattedTime = `${formattedHours}:${minutes.toString().padStart(2, '0')}${ampm}`;
+
+        const updatedMessages = [
+            ...selectedUser.messages,
+            {
+                from: "admin" as const,
+                text: newMessage.trim(),
+                time: formattedTime
+            }
+        ];
+
+        const updatedUser = {
+            ...selectedUser,
+            messages: updatedMessages
+        };
+
         setSelectedUser(updatedUser);
+        setNewMessage("");
     };
 
     return (
@@ -201,7 +231,7 @@ export default function ChatUI() {
                             <div className="p-4 border-t border-t-green-500 flex gap-2 items-center">
                                 <Textarea
                                     value={newMessage}
-                                    onChange={(e: any) => setNewMessage(e.target.value)}
+                                    onChange={(e) => setNewMessage(e.target.value)}
                                     placeholder="Write a message..."
                                     className="flex-1 min-h-[40px]"
                                 />

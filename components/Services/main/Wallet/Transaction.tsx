@@ -19,7 +19,7 @@ export interface TransactionRow {
     status: 'Successful' | 'Failed' | 'Pending';
     date: string;
     balance: string;
-    icon?: React.ComponentType | any;
+    icon?: React.ComponentType;
 }
 
 
@@ -62,14 +62,11 @@ const Transaction: React.FC<BaseTableProps>  = ({data})=> {
     };
 
 
-
-
-
-    const Credit = data.reduce((sum:any, txn:any) =>  currencyToNumber(txn.amount), 0);
+    const Credit = data.reduce((sum:number, txn:TransactionRow) =>  currencyToNumber(txn.amount), 0);
 
     const columns = [
         { header: "#", accessor: "icon" as keyof TransactionRow,
-            render: (item: TransactionRow) => <span>{ListIcons.dashboard}</span>, // ✅ Now TypeScript knows item.icon exists
+            render: () => <span>{ListIcons.dashboard}</span>,
         },
         { header: "First Name", accessor: "firstName" as keyof TransactionRow },
         { header: "Last Name", accessor: "lastName" as keyof TransactionRow },

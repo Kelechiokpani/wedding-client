@@ -1,22 +1,28 @@
+'use client'
 import React from "react";
-
 import Image from "next/image";
 import Chart1 from "../../../../public/assets/images/main/_Chart1.png"
 import Chart2 from "../../../../public/assets/images/main/_Chart2.png"
 import Chart3 from "../../../../public/assets/images/main/_Chart3.png"
-import {currencyToNumber, formatCurrency} from "@/utils/utils";
+import {formatCurrency} from "@/utils/utils";
+import {TransactionRow} from "@/components/Services/main/Wallet/Transaction";
 
-const Wallet = ({data}:any)=>{
+interface WalletProps {
+    data: TransactionRow[];
+}
+
+
+const Wallet = ({data}:WalletProps)=>{
 
     // Calculate totals
-    const creditTransactions = data.filter((amount:any) => amount.type === 'credit');
-    const debitTransactions = data.filter((amount:any) => amount.type === 'debit');
+    const creditTransactions = data.filter((amount:TransactionRow) => amount.type === 'credit');
+    const debitTransactions = data.filter((amount:TransactionRow) => amount.type === 'debit');
 
-    const totalCredit = creditTransactions.reduce((sum:any, txn:any) =>
+    const totalCredit = creditTransactions.reduce((sum:number, txn:TransactionRow) =>
         sum + parseFloat(txn.amount.replace(/,/g, '')), 0);
 
 
-    const totalDebit = debitTransactions.reduce((sum:any, txn:any) =>
+    const totalDebit = debitTransactions.reduce((sum:number, txn:TransactionRow) =>
         sum + parseFloat(txn.amount.replace(/,/g, '')), 0);
 
     const netBalance = totalCredit - totalDebit;

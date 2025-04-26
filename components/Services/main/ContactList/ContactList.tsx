@@ -2,15 +2,13 @@
 import BaseTable from "@/components/molecules/Base-Table";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
-import {MoreVertical, Plus, Search, Upload} from "lucide-react";
-import {Input} from "@/components/ui/input";
+import {MoreVertical, Plus} from "lucide-react";
 import {ListIcons} from "@/public/assets/icons";
 import BaseModal from "@/components/molecules/BaseModal";
 import React, {useEffect, useMemo, useState} from "react";
 import CreateList from "@/components/Services/main/ContactList/CreateList";
 import Link from "next/link";
 import EditList from "@/components/Services/main/ContactList/EditList";
-import editList from "@/components/Services/main/ContactList/EditList";
 import Delete from "@/components/molecules/Base-Delete";
 import {Pagination} from "@/utils/Pagination";
 import {useDebouncedValue} from "@/utils/useDebouncedSearch";
@@ -19,7 +17,7 @@ import {SearchInput} from "@/utils/SearchInput";
 
 export interface ListRow {
     id: string;
-    icon: React.ComponentType | any;
+    icon: React.ComponentType;
     name: string;
     count: number;
     date: string;
@@ -81,7 +79,7 @@ const ContactList: React.FC<BaseTableProps>  =  ({data})=>{
 
     const columns = [
         { header: "#", accessor: "icon" as keyof ListRow,
-            render: (item: ListRow) => <span>{ListIcons.dashboard}</span>, // ✅ Now TypeScript knows item.icon exists
+            render: () => <span>{ListIcons.dashboard}</span>, // ✅ Now TypeScript knows item.icon exists
         },
         { header: "ContactList List", accessor: "name" as keyof ListRow },
         { header: "#", accessor: "count" as keyof ListRow },
@@ -201,7 +199,7 @@ const ContactList: React.FC<BaseTableProps>  =  ({data})=>{
                     {selectedRow && (
                         <Delete
                             closeModal={closeModal}
-                            row={selectedRow}
+                            row={selectedRow.id}
                         />
                     )}
                 </BaseModal>

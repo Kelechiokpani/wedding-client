@@ -1,11 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import {Button} from "@/components/ui/button";
+import {ListRow} from "@/components/Services/main/ContactList/ContactList";
 
 
 interface Props {
     closeModal: () => void
-    row:any
+    row: ListRow
 }
 
 const EditList = ({closeModal, row} : Props) => {
