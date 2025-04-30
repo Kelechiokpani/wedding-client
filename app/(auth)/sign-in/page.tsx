@@ -11,8 +11,6 @@ import AuthFormComponent from "@/components/molecules/auth-form-component";
 // import { Button } from "@/components/ui/button";
 // import { icons } from "@/public/assets/icons";
 
-
-
 const Index = () => {
     // const router = useRouter();
 
@@ -32,6 +30,7 @@ const Index = () => {
         <AuthLayout signupBtn>
             <AuthFormComponent label="Welcome Back">
               <div>Hello</div>
+              <div>Hello Welcome</div>
 
 
                 {/*<div className="flex flex-col gap-8 w-[420px]">*/}
