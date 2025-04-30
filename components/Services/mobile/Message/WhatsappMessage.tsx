@@ -9,30 +9,23 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import {
-    ContactListing,
-    DedicatedNumberListing,
-    SharedNumberListing,
-    VoiceCampaign
-} from "@/utils/utils";
+import {ContactListing, SenderId, WhatsappCampaign} from "@/utils/utils";
 import {ListRow} from "@/components/Services/main/ContactList/ContactList";
 
 
 
-const VoiceMessage = ( )=>{
+const WhatsappMessage = ( )=>{
     const router = useRouter();
     const [message, setMessage] = useState("");
     const [to, setTo] = useState<string[]>([]);
     const [selectedList, setSelectedList] = useState<ListRow | null>(null);
-    const [voiceId, setVoiceId] = useState('');
+    const [senderId, setSenderId] = useState('');
     const [campaignType, setCampaignType] = useState('');
 
 
 
     const [inputValue, setInputValue] = useState("");
-
     const [contactMode, setContactMode] = useState("manual");
-    const [callerIdMode, setCallerIdMode] = useState("shared");
 
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -73,44 +66,28 @@ const VoiceMessage = ( )=>{
                 <Card className="p-6 space-y-20 border-2 border-orange-300">
 
                     {/*  contact Input Mode */}
-                    <div className="flex justify-end gap-6 ">
-                        <div className=''>
+                    <div className="flex justify-end  ">
+                        <div className='px-8'>
                             <Label className="block cursor-pointer font-semibold mb-2">Recipient Mode</Label>
                             <Select value={contactMode} onValueChange={setContactMode}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Select recipient mode"/>
                                 </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem className='cursor-pointer mb-2' value="manual"> Manual
-                                        Input </SelectItem>
-                                    <SelectItem className='cursor-pointer' value="contacts">From Contacts
-                                        List</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                        <div className=''>
-                            <Label className="block cursor-pointer font-semibold mb-2">Caller Number Switch</Label>
-                            <Select value={callerIdMode} onValueChange={setCallerIdMode}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder="Select Caller ID mode"/>
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem className='cursor-pointer mb-2' value="shared"> Shared Number </SelectItem>
-                                    <SelectItem className='cursor-pointer' value="dedicated">Dedicated Number</SelectItem>
+                                <SelectContent >
+                                    <SelectItem className='cursor-pointer mb-2' value="manual"> Manual Input </SelectItem>
+                                    <SelectItem className='cursor-pointer'  value="contacts">From Contacts List</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
                     </div>
 
                     <div className="">
-
                         {contactMode === "manual" ? (
                             <div>
                                 <div className='mb-8'>
                                     <Label htmlFor="to" className="block mb-2 font-semibold">To (Contacts)</Label>
                                     <div className="relative ">
-                                        <div
-                                            className="flex mb-4 flex-wrap gap-2 border rounded-md px-2 py-1 focus-within:ring-2 focus-within:ring-blue-400">
+                                        <div className="flex mb-4 flex-wrap gap-2 border rounded-md px-2 py-1 focus-within:ring-2 focus-within:ring-blue-400">
                                             {to.map((recipient, index) => (
                                                 <span
                                                     key={index}
@@ -174,41 +151,22 @@ const VoiceMessage = ( )=>{
                         {/* Sender ID selection */}
 
 
-                        <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t mt-4">
-
-                            {callerIdMode === "shared" ? (
-                              <div className="mb-8 mt-8 w-full">
-                                <Label htmlFor="from" className="block mb-2 font-semibold">From (Shared Caller Number)</Label>
-                                <Select value={voiceId} onValueChange={setVoiceId}>
+                        <div
+                            className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t mt-4">
+                            <div className="mb-8 mt-8 w-full">
+                                <Label htmlFor="from" className="block mb-2 font-semibold">From (senderID)</Label>
+                                <Select value={senderId} onValueChange={setSenderId}>
                                     <SelectTrigger className='p-6'>
-                                        <SelectValue placeholder="Select Shared Caller ID"/>
+                                        <SelectValue placeholder="Select sender ID"/>
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {SharedNumberListing.map((data, idx) => (
+                                        {SenderId.map((sender, idx) => (
                                             <SelectItem className='p-3 cursor-pointer' key={idx}
-                                                        value={data.phoneNumber}>{data.phoneNumber}</SelectItem>
+                                                        value={sender.name}>{sender.name}</SelectItem>
                                         ))}
                                     </SelectContent>
                                 </Select>
                             </div>
-                            ) : (
-                                <div className="mb-8 mt-8 w-full">
-                                    <Label htmlFor="from" className="block mb-2 font-semibold">From (Dedicated Caller
-                                        Number)</Label>
-                                    <Select value={voiceId} onValueChange={setVoiceId}>
-                                        <SelectTrigger className='p-6'>
-                                            <SelectValue placeholder="Select Dedicated Caller ID"/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {DedicatedNumberListing.map((data, idx) => (
-                                                <SelectItem className='p-3 cursor-pointer' key={idx}
-                                                            value={data.phoneNumber}>{data.phoneNumber}</SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            )}
-
                             <div className="mb-8 mt-8 w-full">
                                 <Label htmlFor="from" className="block mb-2 font-semibold">Select (Campaign
                                     Type)</Label>
@@ -217,7 +175,7 @@ const VoiceMessage = ( )=>{
                                         <SelectValue placeholder="Select Campaign Type"/>
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {VoiceCampaign.map((campaign, idx) => (
+                                        {WhatsappCampaign.map((campaign, idx) => (
                                             <SelectItem className='p-3 cursor-pointer' key={idx}
                                                         value={campaign.name}>{campaign.label}</SelectItem>
                                         ))}
@@ -226,8 +184,6 @@ const VoiceMessage = ( )=>{
                             </div>
 
                         </div>
-
-
 
                         {/*   CampaignType */}
 
@@ -281,5 +237,5 @@ const VoiceMessage = ( )=>{
     )
 }
 
-export default VoiceMessage
+export default WhatsappMessage
 

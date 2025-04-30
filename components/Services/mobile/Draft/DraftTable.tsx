@@ -150,7 +150,7 @@ const DraftList: React.FC<BaseTableProps>  =  ({data})=>{
                     </div>
 
                        <div className="flex gap-3">
-                            <Link  className="bg-orange-500 hover:bg-[#04BA99] text-white flex items-center py-2 px-3 rounded" href="/mobile-texting/inbox/new">
+                            <Link  className="bg-orange-500 hover:bg-[#04BA99] text-white flex items-center py-2 px-3 rounded" href="/mobile-texting/campaign">
                                 <Plus size={16} className="mr-2"/> New Message
                             </Link>
                        </div>

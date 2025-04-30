@@ -8,7 +8,7 @@ function Header() {
     {/*<div className="h-[92px] flex items-center bg-white px-8 justify-between ">*/}
       <div className="">
         <h1 className="text-text font-semibold text-2xl">Dashboard</h1>
-        <p className="text-dark-gray font-normal">Welcome Back, Bube! </p>
+        <p className="text-dark-gray font-normal">Welcome Back, Emmanuel! </p>
       </div>
 
       <div className="flex gap-8 items-center">

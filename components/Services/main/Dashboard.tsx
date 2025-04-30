@@ -53,7 +53,7 @@ export default function Dashboard() {
     return (
         <div className="flex flex-col  p-2  min-h-screen">
             {/* Header */}
-            <h1 className="text-3xl font-bold">Welcome back Bube!</h1>
+            <h1 className="text-3xl font-bold">Welcome back Emmanuel!</h1>
             <p className="text-gray-500">Here what is happening in your account today</p>
 
             {/* Stats Section */}

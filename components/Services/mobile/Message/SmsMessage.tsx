@@ -9,16 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Clock } from "lucide-react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import {CampaignType, ContactListing} from "@/utils/utils";
+import {ContactListing, SenderId, SmsCampaign} from "@/utils/utils";
 import {ListRow} from "@/components/Services/main/ContactList/ContactList";
-
-
-const SenderId = [
-    {id:"1001", name: "Default sender setting (recommended)"},
-    {id:"1002", name:"CompanyName"},
-    {id:"1003", name: "MyService"},
-];
-
 
 
 
@@ -159,8 +151,7 @@ const SmsMessage = ( )=>{
                            {/* Sender ID selection */}
 
 
-                           <div
-                               className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t mt-4">
+                           <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t mt-4">
                                <div className="mb-8 mt-8 w-full">
                                    <Label htmlFor="from" className="block mb-2 font-semibold">From (senderID)</Label>
                                    <Select value={senderId} onValueChange={setSenderId}>
@@ -183,7 +174,7 @@ const SmsMessage = ( )=>{
                                            <SelectValue placeholder="Select Campaign Type"/>
                                        </SelectTrigger>
                                        <SelectContent>
-                                           {CampaignType.map((campaign, idx) => (
+                                           {SmsCampaign.map((campaign, idx) => (
                                                <SelectItem className='p-3 cursor-pointer' key={idx}
                                                            value={campaign.name}>{campaign.label}</SelectItem>
                                            ))}

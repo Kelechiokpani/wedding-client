@@ -44,19 +44,17 @@ const chartConfig = {
     },
 } satisfies ChartConfig
 
+
 export function Overview_Stats() {
     return (
-        <div className="container mx-auto ">
+        <div className="container mx-auto">
             <Card className="mt-8">
                 <CardHeader>
                     <CardTitle>Message Chart - </CardTitle>
                     <CardDescription>
                         Showing total sent and Failed Message
-                        {/*Showing total sent and Failed Message for the last 6 months*/}
                     </CardDescription>
                 </CardHeader>
-
-
                 <CardContent>
                     <ChartContainer config={chartConfig}>
                         <BarChart accessibilityLayer data={chartData}>
@@ -77,7 +75,6 @@ export function Overview_Stats() {
                         </BarChart>
                     </ChartContainer>
                 </CardContent>
-
                 <CardFooter>
                     <div className="flex w-full items-start gap-2 text-sm">
                         <div className="grid gap-2">

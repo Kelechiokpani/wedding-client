@@ -10,7 +10,6 @@ import Link from "next/link";
 
 
 const campaigns = [
-
     {
         title: "Simple Texting Solutions (1-Way SMS)",
         description:
@@ -24,7 +23,7 @@ const campaigns = [
         description:
             "Send and receive SMS globally. Engage in rich, simplified, purposeful and interactive conversation with your customers. Stay in touch with them & show them you care.",
         action: "Sms Campaign",
-        to:"/mobile-texting/campaign/sms",
+        to:"/mobile-texting/campaign/conversation",
         image: campaignTwo,
     },
     {
@@ -36,10 +35,10 @@ const campaigns = [
         image: campaignVoice
     },
     {
-        title: "Custom Questionnaire Texting",
+        title: "Whatsapp Campaign Message",
         description: "Customize your Forms & personalize communications with your audience.",
-        action: "Questionnaire",
-        to:"/mobile-texting/campaign/questionnaire",
+        action: "Whatsapp Campaign",
+        to:"/mobile-texting/campaign/whatsapp",
         image: campaignQues
     },
 ];

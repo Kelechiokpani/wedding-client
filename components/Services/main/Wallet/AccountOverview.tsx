@@ -6,7 +6,7 @@ export function AccountOverview() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             <AccountCard
                 bankName="Wema Bank"
-                accountName="Sarah Williams"
+                accountName="Emmanuel Williams"
                 accountNumber="12345678900"
                 balance={5842.32}
                 availableBalance={5842.32}

@@ -36,7 +36,7 @@ export const mainGeneral = [
   },
   {
     label: "help center",
-    link: "#",
+    link: "/dashboard/help-center",
     icon: sideIcons.help_center,
     active_icon: sideIcons.help_center_active,
   },
@@ -81,18 +81,11 @@ export const mobileSideBar = [
     active_icon: sideIcons.purchase_active,
   },
   {
-    label: "View Campaigns",
-    link: "/mobile-texting/view-campaigns",
+    label: "Campaigns Reports",
+    link: "/mobile-texting/reports",
     icon: sideIcons.purchase,
     active_icon: sideIcons.purchase_active,
   },
-  {
-    label: "Delivery Report",
-    link: "#",
-    icon: sideIcons.sales,
-    active_icon: sideIcons.sales_active,
-  },
-
 ];
 
 export const mobileGeneral = [

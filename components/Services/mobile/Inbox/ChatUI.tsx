@@ -58,7 +58,7 @@ const users: User[] = [
         name: "Grace Idoko",
         phone: "+2347012233344",
         avatar: Logo,
-        campaign:"one-way sms campaign",
+        campaign:"whatsapp campaign",
         messages: [
             { from: "user", text: "Is WhatsApp automation available?", time: "8:15am" },
             { from: "admin", text: "Yes, we support WhatsApp campaign management.", time: "8:17am" },
@@ -82,7 +82,7 @@ const users: User[] = [
         id: "5",
         name: "Amaka Uche",
         phone: "+2347019988776",
-        campaign:"two-way sms campaign",
+        campaign:"whatsapp campaign",
         avatar: Logo,
         messages: [
             { from: "user", text: "Thanks for the support earlier!", time: "6:30am" },

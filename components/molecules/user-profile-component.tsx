@@ -9,6 +9,8 @@ import {
 import Image from "next/image";
 import { Separator } from "../ui/separator";
 import Link from "next/link";
+import Logo from "@/public/assets/images/logo.png"
+
 
 function UserProfileComponent() {
   const profileLinks = [
@@ -31,17 +33,18 @@ function UserProfileComponent() {
             alt="user avatar"
             fill
             sizes="100%"
-            src={"/assets/images/avatar-placeholder.png"}
+            src={Logo}
+            // src={"/assets/images/avatar-placeholder.png"}
             draggable={false}
             className="rounded-full object-cover"
           />
         </div>
         <div className="flex flex-col justify-center">
           <p className="capitalize text-text text-sm font-medium flex gap-3 items-center">
-            john doe <ChevronDown className="text-base text-dark-gray w-4" />
+           Emmanuel <ChevronDown className="text-base text-dark-gray w-4" />
           </p>
           <p className="text-dark-gray text-xs font-normal">
-            johndoe@gmail.com
+            emmanuel@gmail.com
           </p>
         </div>
       </DropdownMenuTrigger>
@@ -55,7 +58,7 @@ function UserProfileComponent() {
               alt="user avatar"
               fill
               sizes="100%"
-              src={"/assets/images/avatar-placeholder.png"}
+              src={"/assets/images/logo.png"}
               draggable={false}
               className="rounded-full object-cover"
             />
