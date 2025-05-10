@@ -31,9 +31,9 @@ function UserProfileComponent() {
         <div className="shrink-0 rounded-full h-10 w-10 bg-[#D3D3D3] relative">
           <Image
             alt="user avatar"
-            fill
             sizes="100%"
             src={Logo}
+            width={200} height={200}
             // src={"/assets/images/avatar-placeholder.png"}
             draggable={false}
             className="rounded-full object-cover"
@@ -53,18 +53,17 @@ function UserProfileComponent() {
         className="px-4 py-5 border-none w-[308px] rounded-xl space-y-4"
       >
         <div className="flex gap-4 items-center">
-          <div className="shrink-0 rounded-full h-[70px] w-[70px] bg-[#D3D3D3] relative">
+          <div className="shrink-0 rounded-full h-[40px] w-[40px] bg-[#D3D3D3] relative">
             <Image
               alt="user avatar"
-              fill
-              sizes="100%"
+              width={200} height={200}
               src={"/assets/images/logo.png"}
               draggable={false}
-              className="rounded-full object-cover"
+              className="rounded-full"
             />
           </div>
           <div className="flex flex-col justify-center">
-            <p className="capitalize text-text text-sm font-normal flex gap-3 items-center">
+            <p className="capitalize  text-sm font-normal flex gap-3 items-center">
               john doe
             </p>
             <p className="text-dark-gray text-xs font-normal">
@@ -77,24 +76,30 @@ function UserProfileComponent() {
 
         <div className="flex flex-col gap-1">
           {profileLinks.map((link, index) => (
-            <Link
-              key={index}
-              href={link.link}
-              className="flex items-center gap-2.5 capitalize h-11 px-3.5 rounded-md hover:bg-secondary"
-            >
-              <span className="w-6 h-6 flex items-center justify-center">
+              <Link
+                  key={index}
+                  href={link.link}
+                  className="flex  gap-2.5 capitalize py-2 px-2 rounded-md hover:bg-secondary"
+              >
+              <span className="w-5 h-5 flex  ">
                 {" "}
                 {link.icon}
               </span>
-              {link.label}
-            </Link>
-          ))}
-          <button className="flex items-center gap-2.5 capitalize h-11 px-3.5 rounded-md hover:bg-secondary">
-            <span className="w-6 h-6 flex items-center justify-center">
+                <span className="text-sm">
+                    {link.label}
+                </span>
+
+              </Link>
+            ))}
+          <button className="flex  gap-2.5 capitalize py-2 px-2 rounded-md hover:bg-secondary">
+            <span className="w-5 h-5 flex ">
               {" "}
-              {sideIcons.logout}{" "}
+              {sideIcons.logout}
             </span>
-            log out
+            <span className="text-sm">
+                     log out
+                </span>
+
           </button>
         </div>
       </DropdownMenuContent>

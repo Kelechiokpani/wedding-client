@@ -36,7 +36,7 @@ function SideBar() {
   return (
       <div
           className={cn(
-              "h-screen bg-white w-[288px] duration-150 flex flex-col",
+              "h-screen bg-white w-[290px] duration-150 flex flex-col",
               isOpen ? null : "w-[115px]"
           )}
       >

@@ -22,21 +22,35 @@ const SmsMessage = ( )=>{
     const [senderId, setSenderId] = useState('');
     const [campaignType, setCampaignType] = useState('');
 
-
-
     const [inputValue, setInputValue] = useState("");
     const [contactMode, setContactMode] = useState("manual");
+
+
+    // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    //     if ((e.key === "Enter" || e.key === "," || e.key === " ") && inputValue.trim()) {
+    //         e.preventDefault();
+    //         if (!to.includes(inputValue.trim())) {
+    //             setTo([...to, inputValue.trim()]);
+    //         }
+    //         setInputValue("");
+    //     }
+    // };
 
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if ((e.key === "Enter" || e.key === "," || e.key === " ") && inputValue.trim()) {
             e.preventDefault();
-            if (!to.includes(inputValue.trim())) {
-                setTo([...to, inputValue.trim()]);
+            const raw = inputValue.trim();
+            if (/^\d{10,}$/.test(raw)) {
+                const transformed = `+234${raw.slice(1)}`;
+                if (!to.includes(transformed)) {
+                    setTo([...to, transformed]);
+                }
             }
             setInputValue("");
         }
     };
+
 
     const removeRecipient = (index: number) => {
         setTo(to.filter((_, i) => i !== index));
@@ -46,8 +60,7 @@ const SmsMessage = ( )=>{
         const foundList = ContactListing.find(list => list.name === value);
         if (foundList) {
             setSelectedList(foundList);
-            // If you want to set the contacts from the list to 'to' state:
-            // setTo([...to, foundList.name]); // Or whatever logic you need
+
         }
     };
 
@@ -62,7 +75,7 @@ const SmsMessage = ( )=>{
                 </Button>
             </div>
 
-            <div className="max-w-5xl mx-auto p-4 space-y-10">
+            <div className="max-w-5xl mx-auto p-4 space-y-10 ">
                 <Card className="p-6 space-y-20 border-2 border-orange-300">
 
                     {/*  contact Input Mode */}

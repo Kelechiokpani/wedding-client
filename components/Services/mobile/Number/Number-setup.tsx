@@ -26,11 +26,11 @@ const NumberSetup = () => {
 
 
                 <TabsContent value="shared" className="mt-8">
-                    <SharedNumber data={SharedNumberListing}/>
+                     <SharedNumber data={SharedNumberListing}/>
                 </TabsContent>
 
                 <TabsContent value="dedicated" className="mt-4">
-                   <DedicatedNumber data={DedicatedNumberListing}/>
+                    <DedicatedNumber data={DedicatedNumberListing}/>
                 </TabsContent>
 
             </Tabs>
