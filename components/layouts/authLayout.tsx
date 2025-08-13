@@ -1,9 +1,4 @@
 import React from "react";
-// import { PrimaryLogo } from "../atoms/logo";
-// import ButtonComponent from "../atoms/button-component";
-// import { ArrowLeft } from "lucide-react";
-// import { useRouter } from "nextjs-toploader/app";
-// import LoginPage from "@/components/Services/Auth/Login";
 
 
 function AuthLayout({

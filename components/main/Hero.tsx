@@ -5,13 +5,12 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Logo from "@/public/assets/images/logo.png";
 import bgImage from '@/public/assets/images/wedding1.png'
 import Image from "next/image"
-import { useParams } from 'next/navigation';
-
+// import { useParams } from 'next/navigation';
 
 
 
 export default function Wedding_Hero() {
-    const { guestCode } = useParams();
+    // const { guestCode } = useParams();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
 
@@ -43,10 +42,10 @@ export default function Wedding_Hero() {
                         <button
                             type="button"
                             onClick={() => setMobileMenuOpen(true)}
-                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-200"
+                            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
                         >
                             <span className="sr-only">Open main menu</span>
-                            <Bars3Icon aria-hidden="true" className="size-6" />
+                            <Bars3Icon aria-hidden="true" className="size-6"/>
                         </button>
                     </div>
                     <div className="hidden lg:flex lg:gap-x-12">
@@ -61,47 +60,64 @@ export default function Wedding_Hero() {
                             Guest List <span aria-hidden="true">&rarr;</span>
                         </a>
                     </div>
+
+                    <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                        <a href="/checkin" className="text-sm/6 font-semibold text-white">
+                            Guest Check-In <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
                 </nav>
                 <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-                    <div className="fixed inset-0 z-50" />
-                    <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
+                    <div className="fixed inset-0 z-50"/>
+                    <DialogPanel
+                        className="fixed inset-y-0 h-[20rem]  right-0 z-50 w-full overflow-y-auto bg-pink-300 shadow-lg p-6 sm:max-w-sm">
                         <div className="flex items-center justify-between">
                             <a href="#" className="-m-1.5 p-1.5">
-                                <span className="sr-only">Your Company</span>
-                                <img
+                                <Image
+                                    width={50}
+                                    height={50}
                                     alt=""
-                                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+                                    src={Logo}
                                     className="h-8 w-auto"
                                 />
                             </a>
                             <button
                                 type="button"
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="-m-2.5 rounded-md p-2.5 text-gray-200"
+                                className="-m-2.5 rounded-md p-2.5 text-white"
                             >
                                 <span className="sr-only">Close menu</span>
-                                <XMarkIcon aria-hidden="true" className="size-6" />
+                                <XMarkIcon aria-hidden="true" className="size-6 text-white" />
                             </button>
                         </div>
                         <div className="mt-6 flow-root">
                             <div className="-my-6 divide-y divide-white/10">
-                                <div className="space-y-2 py-6">
-                                    {navigation.map((item) => (
-                                        <a
-                                            key={item.name}
-                                            href={item.href}
-                                            className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white "
-                                        >
-                                            {item.name}
-                                        </a>
-                                    ))}
-                                </div>
+                                {/*<div className="space-y-2 py-6">*/}
+                                {/*    {navigation.map((item) => (*/}
+                                {/*        <a*/}
+                                {/*            key={item.name}*/}
+                                {/*            href={item.href}*/}
+                                {/*            className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white "*/}
+                                {/*        >*/}
+                                {/*            {item.name}*/}
+                                {/*        </a>*/}
+                                {/*    ))}*/}
+                                {/*</div>*/}
                                 <div className="py-6">
                                     <a
-                                        href="#"
+                                        href="/guest"
                                         className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
                                     >
-                                        Log in
+                                        Guest List
+                                    </a>
+                                </div>
+
+                                <div className="py-2">
+                                    <a
+                                        href="/checkin"
+                                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5"
+                                    >
+                                        Guest Check-In
                                     </a>
                                 </div>
                             </div>
@@ -136,10 +152,10 @@ export default function Wedding_Hero() {
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <a
-                                href="#rsvp"
+                                href="#"
                                 className="rounded-md uppercase bg-pink-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-pink-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-500"
                             >
-                                {/*RSVP Now*/} Guest Check-In
+                                 Welcome to Our Wedding
                             </a>
 
                         </div>

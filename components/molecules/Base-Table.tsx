@@ -21,8 +21,8 @@ interface BaseTableProps<T> {
 
 const BaseTable = <T,>({ columns, data }: BaseTableProps<T>) => {
     return (
-        <div className="rounded-lg mt-8 shadow-md">
-                <Table className="w-full bg-white rounded-lg  shadow-2xl overflow-hidden">
+        <div className="rounded-lg mt-8 shadow-md overflow-x-auto">
+                <Table className="w-full bg-white rounded-lg overflow-x-auto  shadow-2xl overflow-hidden">
                     <TableHeader className="bg-orange-100">
                     <TableRow>
                         {columns.map((column, idx) => (

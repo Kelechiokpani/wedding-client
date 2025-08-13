@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import Wedding_Hero from "@/components/Services/main/Hero";
+import Wedding_Hero from "@/components/main/Hero";
 
 export default function Page() {
     return (

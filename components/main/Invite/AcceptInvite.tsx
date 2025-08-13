@@ -4,8 +4,16 @@ import { create } from 'zustand';
 import { useParams, useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import bgImage from '@/public/assets/images/wed.webp';
-import TextCarousel from "@/components/Services/main/TextCarousel";
-import AlreadyResponded from "@/components/Services/main/Invite/AlreadyResponded";
+import TextCarousel from "@/components/main/TextCarousel";
+import AlreadyResponded from "@/components/main/Invite/AlreadyResponded";
+
+
+type Invite = {
+    inviteId: string;
+    name: string;
+    phone: string;
+    status?: string;
+};
 
 // -------------------- Zustand Store --------------------
 type InviteState = {
@@ -40,12 +48,15 @@ export default function AcceptInvite(): JSX.Element {
     const { name, phone, status, setField } = useInviteStore();
 
     const [fullName, setFullName] = React.useState("");
+    const [guestId, setGuestID] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [statusMessage, setStatusMessage] = React.useState<string | null>(null);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
     const [alreadyAccepted, setAlreadyAccepted] = useState(false);
     const [error, setError] = useState('');
 
+
+    console.log(error,"error")
 
     useEffect(() => {
         if (!inviteId) return;
@@ -54,11 +65,12 @@ export default function AcceptInvite(): JSX.Element {
             try {
                 const res = await fetch('https://wedding-server-7gp6.onrender.com/api/invites');
                 const data = await res.json();
-                const match = data.find((invite: any) => invite.inviteId === inviteId);
+                const match = data.find((invite: Invite) => invite.inviteId === inviteId);
 
                 if (match && match.status?.toLowerCase() === 'accepted') {
                     setAlreadyAccepted(true);
                     setFullName(match.name)
+                    setGuestID(match.inviteId)
                 }
             } catch {
                 setError('Error fetching invite data.');
@@ -71,6 +83,7 @@ export default function AcceptInvite(): JSX.Element {
     const handleSubmit = async () => {
         setErrorMessage(null);
         setStatusMessage(null);
+
 
         try {
             // Validate form
@@ -95,20 +108,22 @@ export default function AcceptInvite(): JSX.Element {
             } else {
                 setErrorMessage(json?.message || json?.error || 'Could not submit response. Try again.');
             }
-        } catch (err: any) {
-            if (err.name === 'ValidationError') {
-                setErrorMessage(err.errors.join(' | '));
+        } catch (err: unknown) {
+            if (err instanceof Error && err.name === 'ValidationError') {
+                const validationErr = err as unknown as { errors: string[] };
+                setErrorMessage(validationErr.errors.join(' | '));
             } else {
                 setErrorMessage('Network error. Please try again.');
             }
         } finally {
             setLoading(false);
         }
+
     };
 
     // if (loading) return <div className="p-6 text-center">Loading please wait...</div>;
     if (alreadyAccepted)
-        return (<AlreadyResponded name={fullName}/>)
+        return (<AlreadyResponded name={fullName} GuestId={guestId}/>)
 
     return (
         <div>

@@ -1,7 +1,5 @@
 'use client'
 import BaseTable from "@/components/molecules/Base-Table";
-import {Button} from "@/components/ui/button";
-import {Plus} from "lucide-react";
 import React, {useEffect, useMemo, useState} from "react";
 import {Pagination} from "@/utils/Pagination";
 import {useDebouncedValue} from "@/utils/useDebouncedSearch";
@@ -61,11 +59,11 @@ const GuestList: React.FC<BaseTableProps>  =  ({data})=>{
 
     const columns = [
         { header: "#", accessor: "icon" as keyof ListRow,
-            render: () => <span>✅- Icon</span>,
+            render: () => <span>✅- GUEST</span>,
         },
         { header: "Guest ID", accessor: "inviteId" as keyof ListRow },
         {
-            header: "Guest Status",
+            header: "Invite Status",
             accessor: "status" as keyof ListRow,
             render: (row: ListRow) => {
                 const status = row.status?.toLowerCase();
@@ -90,11 +88,11 @@ const GuestList: React.FC<BaseTableProps>  =  ({data})=>{
     return (
 
             <div
-                className=" flex items-center justify-center bg-gradient-to-b from-white to-amber-50 p-6"
+                className=" flex items-center justify-center bg-gradient-to-b from-white to-amber-50 lg:p-8 p-4"
                 style={{ backgroundImage: `url(${bgImage.src})` }}
             >
 
-            <div className="w-full p-8  bg-gray-50 min-h-screen">
+            <div className="w-full bg-gray-50 min-h-screen">
                 <div className="mb-8">
                     <h1 className="text-2xl font-semibold">Guest List</h1>
                     <p className="text-gray-500 text-sm mt-2">

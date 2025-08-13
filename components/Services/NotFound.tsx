@@ -1,12 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Rocket } from "lucide-react";
-import {useRouter} from "next/navigation";
+// import {useRouter} from "next/navigation";
 
 
 export default function NotFound() {
-    const router = useRouter();
+    // const router = useRouter();
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4">

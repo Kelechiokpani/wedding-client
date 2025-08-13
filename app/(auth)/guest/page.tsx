@@ -1,20 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import GuestList from "@/components/Services/main/ContactList/ContactList";
-import bgImage from "@/public/assets/images/wed.webp";
+import GuestList from "@/components/main/ContactList/ContactList";
+import {ClockLoader} from "react-spinners";
 
 
 export default function Page() {
-    const [guestList, setGuestList] = useState<any[]>([]);
-    const [alreadyAccepted, setAlreadyAccepted] = useState(false);
-    const [fullName, setFullName] = useState("");
+    const [guestList, setGuestList] = useState<[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    const searchParams = useSearchParams();
-    const inviteId = searchParams.get("inviteId");
-
 
     useEffect(() => {
         (async () => {
@@ -26,29 +19,28 @@ export default function Page() {
                 const data = await res.json();
                 setGuestList(data); // store full guest list
 
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (err) {
                 setError("Error fetching invite data.");
             } finally {
                 setLoading(false);
             }
         })();
-    }, [inviteId]);
+    }, []);
 
-    if (loading) return <p className="p-8">Loading...</p>;
+    if (loading) return(
+        <div className="p-8 flex justify-center text-center" style={{marginTop:"10rem"}}>
+            <p className="p-4 flex justify-center text-center" >
+                Loading...</p>
+            <ClockLoader />
+        </div>
+        )
+
     if (error) return <p className="p-8 text-red-500">{error}</p>;
 
     return (
        <div className="w-full">
-            {alreadyAccepted ? (
-                <div>
-                    <h1 className="text-2xl font-semibold">Thank you, {fullName}!</h1>
-                    <p className="mt-2">You have already accepted this invitation.</p>
-                </div>
-            ) : (
-                <>
-                    <GuestList data={guestList}/>
-                </>
-            )}
+           <GuestList data={guestList}/>
         </div>
     );
 }
