@@ -58,9 +58,6 @@ const GuestList: React.FC<BaseTableProps>  =  ({data})=>{
     };
 
     const columns = [
-        { header: "#", accessor: "icon" as keyof ListRow,
-            render: () => <span>✅- GUEST</span>,
-        },
         { header: "Guest ID", accessor: "inviteId" as keyof ListRow },
         {
             header: "Invite Status",
