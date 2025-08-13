@@ -1,25 +1,19 @@
 'use client'
 import BaseTable from "@/components/molecules/Base-Table";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import {Button} from "@/components/ui/button";
-import {MoreVertical, Plus} from "lucide-react";
-import {ListIcons} from "@/public/assets/icons";
-import BaseModal from "@/components/molecules/BaseModal";
+import {Plus} from "lucide-react";
 import React, {useEffect, useMemo, useState} from "react";
-import CreateList from "@/components/Services/main/ContactList/CreateList";
-import Link from "next/link";
-import EditList from "@/components/Services/main/ContactList/EditList";
-import Delete from "@/components/molecules/Base-Delete";
 import {Pagination} from "@/utils/Pagination";
 import {useDebouncedValue} from "@/utils/useDebouncedSearch";
 import {SearchInput} from "@/utils/SearchInput";
+import bgImage from "@/public/assets/images/wed.webp";
 
 
 export interface ListRow {
-    id: string;
+    inviteId: string;
     icon: React.ComponentType;
     name: string;
-    count: number;
+    status: string;
     date: string;
 }
 
@@ -31,12 +25,8 @@ interface BaseTableProps {
 
 
 
-const ContactList: React.FC<BaseTableProps>  =  ({data})=>{
-    const [openList, setOpenList] = useState(false);
-    const [selectedRow, setSelectedRow] = useState<ListRow | null>(null);
-    const [modalType, setModalType] = useState<'edit' | 'delete' | null>(null);
+const GuestList: React.FC<BaseTableProps>  =  ({data})=>{
     const [currentPage, setCurrentPage] = useState(1);
-
 
     const [searchTerm, setSearchTerm] = useState('');
     const debouncedSearchTerm = useDebouncedValue(searchTerm, 300);
@@ -44,10 +34,13 @@ const ContactList: React.FC<BaseTableProps>  =  ({data})=>{
 
     const filteredData = useMemo(() => {
         if (!debouncedSearchTerm.trim()) return data;
+        const term = debouncedSearchTerm.toLowerCase();
         return data.filter(contact =>
-            contact.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+            contact.inviteId.toLowerCase().includes(term) ||
+            contact.name?.toLowerCase().includes(term) ||
+            contact.status?.toLowerCase().includes(term)
         );
-         }, [data, debouncedSearchTerm]);
+    }, [data, debouncedSearchTerm]);
 
 
     useEffect(() => {
@@ -66,94 +59,60 @@ const ContactList: React.FC<BaseTableProps>  =  ({data})=>{
         window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-
-    const handleAction = (row: ListRow, action: 'edit' | 'delete') => {
-        setSelectedRow(row);
-        setModalType(action);
-    };
-
-    const closeModal = () => {
-        setSelectedRow(null);
-        setModalType(null);
-    };
-
     const columns = [
         { header: "#", accessor: "icon" as keyof ListRow,
-            render: () => <span>{ListIcons.dashboard}</span>, // ✅ Now TypeScript knows item.icon exists
+            render: () => <span>✅- Icon</span>,
         },
-        { header: "ContactList List", accessor: "name" as keyof ListRow },
-        { header: "#", accessor: "count" as keyof ListRow },
-        { header: "Date", accessor: "date" as keyof ListRow },
+        { header: "Guest ID", accessor: "inviteId" as keyof ListRow },
         {
-            header: "Action",
-            // render: () => (
-            render: (row: ListRow) => (
+            header: "Guest Status",
+            accessor: "status" as keyof ListRow,
+            render: (row: ListRow) => {
+                const status = row.status?.toLowerCase();
+                let color = "text-gray-500"; // default
 
-                <DropdownMenu >
-                    <DropdownMenuTrigger asChild>
-                        <Button size="icon" variant="ghost">
-                            <MoreVertical className="w-4 h-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-40 cursor-pointer ">
+                if (status === "pending") color = "text-gray-100";
+                else if (status === "approved" || status === "accepted") color = "text-green-500";
+                else if (status === "declined") color = "text-red-500";
 
-                        <Link
-                            href={{
-                                pathname: `/dashboard/contacts/${row.id}`,
-                                query: { title: row.name }
-                            }}
-                        >
-                            <p className="px-4 py-2 text-sm text-gray-600  rounded-sm  lowercase hover:bg-orange-100">
-                                View
-                            </p>
-                        </Link>
-
-                        <button
-                            onClick={() => handleAction(row, 'edit')}
-                            className="w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-orange-100"
-                        >
-                            Edit
-                        </button>
-                        <button
-                            onClick={() => handleAction(row, 'delete')}
-                            className="w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-orange-100"
-                        >
-                            Delete
-                        </button>
-
-
-                    </DropdownMenuContent>
-                </DropdownMenu>
-
-
-            ),
+                return <span className={`font-bold ${color}`}>{row.status || ""}</span>;
+                },},
+        {
+            header: "Guest Name",
+            accessor: "name" as keyof ListRow,
+            render: (row: ListRow) =>
+                row?.name ? <span>{row.name}</span> : <span></span>,
         },
+
     ];
 
 
     return (
-        <div>
-            <div className="p-8 max-w-5xl  bg-gray-50 min-h-screen">
-            {/*<div className="p-6 max-w-5xl mx-auto bg-gray-50 min-h-screen">*/}
+
+            <div
+                className=" flex items-center justify-center bg-gradient-to-b from-white to-amber-50 p-6"
+                style={{ backgroundImage: `url(${bgImage.src})` }}
+            >
+
+            <div className="w-full p-8  bg-gray-50 min-h-screen">
+                <div className="mb-8">
+                    <h1 className="text-2xl font-semibold">Guest List</h1>
+                    <p className="text-gray-500 text-sm mt-2">
+                        All invited guests are listed below.
+                    </p>
+                </div>
                 {/* Search & Actions */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
 
                     <div className="w-full md:w-1/3">
-                        <SearchInput
+                    <SearchInput
                             value={searchTerm}
                             onChange={setSearchTerm}
-                            placeholder="Search by name"
+                            placeholder="Search by name, status and guest Id"
                         />
                     </div>
 
-                    <div className="flex gap-3">
-                        <Button className="bg-orange-500 hover:bg-[#04BA99] text-white flex items-center"
-                                onClick={() => setOpenList(true)}>
-                            <Plus size={16} className="mr-2"/> Create List
-                        </Button>
-                    </div>
                 </div>
-
 
                 <BaseTable<ListRow> columns={columns} data={paginatedContactList}/>
 
@@ -171,46 +130,11 @@ const ContactList: React.FC<BaseTableProps>  =  ({data})=>{
                     />
                 </div>
             </div>
-
-            <div>
-                <BaseModal width="max-w-lg" isOpen={openList} closeModal={() => setOpenList(false)} title="Create Contact List">
-                    <CreateList  setOpenList={setOpenList} />
-                </BaseModal>
-                <BaseModal width="max-w-lg"
-                           isOpen={modalType === 'edit'}
-                           closeModal={closeModal}
-                           title="Edit Contact List"
-                           closeOnOutsideClick={false}
-                >
-                    {selectedRow && (
-                        <EditList
-                            closeModal={closeModal}
-                            row={selectedRow}
-                        />
-                    )}
-                </BaseModal>
-                <BaseModal width="max-w-lg"
-                           isOpen={modalType === 'delete'}
-                           closeModal={closeModal}
-                    // title={`Delete ${selectedRow?.name} List`}
-                           title="Delete Contact List"
-                           closeOnOutsideClick={false}
-                >
-                    {selectedRow && (
-                        <Delete
-                            closeModal={closeModal}
-                            row={selectedRow.id}
-                        />
-                    )}
-                </BaseModal>
-
             </div>
 
-
-        </div>
 
 
     )
 }
 
-export default ContactList
+export default GuestList

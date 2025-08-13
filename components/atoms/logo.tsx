@@ -28,10 +28,10 @@ export function SecondaryLogo() {
 export function Logo() {
   return (
     <Image
-      src={"/assets/images/logo.jpg"}
+      src={"/assets/images/logo.png"}
       alt="logo"
-      width={86}
-      height={36}
+      width={100}
+      height={56}
       draggable={false}
     />
   );

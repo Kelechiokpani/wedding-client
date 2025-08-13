@@ -48,7 +48,7 @@ function SideBar() {
         {isOpen ? <PrimaryLogo /> : <Logo/>}
         <button
           className={cn(
-            "absolute top-1/2 -translate-y-1/2 -right-3 bg-secondary w-5 h-5 flex justify-center items-center rounded-full z-30 duration-150",
+            "absolute top-1/2 -translate-y-1/2 -right-3 bg-secondary w-8 h-8 flex justify-center items-center rounded-full z-30 duration-150",
             isOpen ? null : "rotate-180"
           )}
           onClick={toggleSideBar}

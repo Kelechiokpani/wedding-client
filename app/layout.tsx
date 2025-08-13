@@ -11,7 +11,7 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Kreative Rock",
+  title: "Wedding Invitation",
   description: "",
 };
 

@@ -74,6 +74,18 @@
 }
 
 @layer utilities {
+
+    @keyframes marquee {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(-100%); }
+    }
+    .animate-marquee {
+        animation: marquee 20s linear infinite;
+        min-width: 200%; /* ensures enough space for the loop */
+    }
+
+
+
     /* =====  FORM */
     .form-label {
         @apply w-full text-sm font-normal text-zinc !important;
@@ -129,6 +141,8 @@
         @apply w-[44px] h-[40px] text-2xl font-medium rounded-[6px] ring-primary  text-black justify-center flex gap-5 !important;
     }
 }
+
+
 
 [data-testid="table-dev-tools"] {
     display: none !important;

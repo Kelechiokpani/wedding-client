@@ -51,13 +51,13 @@ export const features = [
 
 export default function Dashboard() {
     return (
-        <div className="flex flex-col  p-2  min-h-screen">
+        <div className="flex flex-col w-full  p-2  min-h-screen">
             {/* Header */}
             <h1 className="text-3xl font-bold">Welcome back Emmanuel!</h1>
             <p className="text-gray-500">Here what is happening in your account today</p>
 
             {/* Stats Section */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-12 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-12 ">
                 {dashboardStats.map((item, idx) => (
                     <DashboardCard
                         key={idx}
@@ -72,7 +72,7 @@ export default function Dashboard() {
 
 
             {/* Feature Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-12 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-12 ">
                 {features.map((feature, idx) => (
                     <FeatureCard key={idx} {...feature} />
                 ))}

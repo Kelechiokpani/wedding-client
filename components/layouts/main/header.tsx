@@ -4,7 +4,8 @@ import UserProfileComponent from "@/components/molecules/user-profile-component"
 
 function Header() {
   return (
-    <div className="h-[82px] flex items-center bg-white px-8 justify-between ">
+    <div className="h-[82px] flex items-center bg-white px-8 justify-between">
+
     {/*<div className="h-[92px] flex items-center bg-white px-8 justify-between ">*/}
       <div className="">
         <h1 className="text-text font-semibold text-2xl">Dashboard</h1>

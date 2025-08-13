@@ -1,122 +1,132 @@
 'use client'
-import { FaGoogle } from "react-icons/fa";
-import dashboard from '@/public/assets/images/dashboard.png'
+import { useFormik } from 'formik';
+import services from '@/public/assets/images/wedding.jpg'
+import bgImage from '@/public/assets/images/wedding1.png'
 import Image from "next/image";
 import {Logo} from "@/components/atoms/logo";
-import React from "react";
+import React, {useState} from "react";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {useRouter} from "nextjs-toploader/app";
+import {FcLock, FcUnlock} from "react-icons/fc";
+import * as Yup from 'yup';
 
 
+const validationSchema = Yup.object({
+    email: Yup.string().email('Invalid email address').required('Email is required'),
+    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    remember: Yup.boolean(),
+});
 
 const LoginScreen =()=> {
     const router = useRouter();
+    const [showPassword, setShowPassword] = useState(false);
 
-    const onSubmit = async () => {
-        router.push("/dashboard");
-    };
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            remember: false,
+        },
+        validationSchema,
+        onSubmit: (values) => {
+            if (values.remember) localStorage.setItem('email', values.email);
+            console.log('Submitting:', {
+                ...values,
+            });
+            router.push('/dashboard');
+        },
+    });
 
     return (
-        <div className="min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="flex items-center justify-center overflow-hidden">
             <div className="bg-white overflow-hidden w-full grid md:grid-cols-2">
                 {/* Left side - Form */}
                 <div className="p-8 md:p-20 flex flex-col justify-center">
                     <Logo/>
                     <div className="pt-6 pb-6">
-                        <h2 className="text-1xl md:text-3xl font-bold mb-2">Welcome Back</h2>
+                        <h2 className="text-1xl md:text-3xl font-bold mb-2"> Daniel ❤️ Sophia</h2>
                         <p className="text-gray-500 mb-6">
-                            Enter your email and password to access your account.
+                            Enter your name and click to accept your Invite.
                         </p>
                     </div>
 
-                    <div className="space-y-4">
-                        <div className='pb-4'>
+                    <div className="space-y-9">
+
+                        <div>
                             <label className="block text-sm mb-1">Email</label>
                             <Input
+                                name="email"
                                 type="email"
-                                defaultValue="sellostore@company.com"
-                                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                className={`w-full border rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                                    formik.touched.email && formik.errors.email ? 'border-red-500' : 'border-gray-900'
+                                }`}
                             />
+                            {formik.touched.email && formik.errors.email && (
+                                <div className="text-red-500 text-sm mt-1">{formik.errors.email}</div>
+                            )}
                         </div>
+
 
                         <div>
                             <label className="block text-sm mb-1">Password</label>
                             <div className="relative">
                                 <Input
-                                    type="password"
-                                    defaultValue="5ellostore."
-                                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                />
-                                <span className="absolute right-3 top-2.5 text-gray-400 cursor-pointer">
-                  👁️
-                </span>
+                                    name="password"
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange}
+                                    type={showPassword ? "text" : "password"}
+                                    onBlur={formik.handleBlur}
+                                    className={`w-full border rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                                        formik.touched.password && formik.errors.password ? 'border-red-500' : 'border-gray-900'
+                                    }`}/>
+                                <span
+                                    className="absolute right-3 top-3 text-gray-500 cursor-pointer select-none"
+                                    onClick={() => setShowPassword((prev) => !prev)}
+                                >
+                                 {showPassword ? <FcUnlock/> : <FcLock/>}
+                                    </span>
                             </div>
+
+                            {formik.touched.password && formik.errors.password && (
+                                <div className="text-red-500 text-sm mt-1">{formik.errors.password}</div>
+                            )}
                         </div>
 
                         <div className="flex items-center justify-between text-sm pt-4 pb-8">
                             <label className="flex items-center gap-2">
-                                <Input type="checkbox" className='h-5 w-5'/>
+                                <Input type="checkbox" className='h-4 w-4'/>
                                 Remember Me
                             </label>
-                            <a href="#" className="text-blue-600 hover:underline">
-                                Forgot Your Password?
-                            </a>
+                            <p className="text-center text-sm">
+                                Don’t Have An Account?{" "}
+                                <a href="/sign-up" className="pl-1 text-blue-600 font-medium hover:underline">
+                                    Sign up Now.
+                                </a>
+                            </p>
                         </div>
 
                         <div className="flex gap-4 justify-center">
-                            <Button onClick={onSubmit}
-                                type="submit"
-                                className="w-[10rem] bg-gradient-to-r from-orange-400 to-green-400 text-white py-5 rounded-lg font-semibold hover:from-blue-300 hover:to-indigo-500"
+                            <Button onClick={() => formik.submitForm()}
+                                    type="submit"
+                                    className="w-[10rem] bg-gradient-to-r from-orange-400 to-green-400 text-white py-5 rounded-lg font-semibold hover:from-blue-300 hover:to-indigo-500"
                             >
-                                Log In
+                                Submit
                             </Button>
                         </div>
                     </div>
 
-                    <div className="my-6 flex items-center justify-between text-sm text-gray-400">
-                        <hr className="w-1/4 border-gray-300" />
-                        <span>Or Login With</span>
-                        <hr className="w-1/4 border-gray-300" />
-                    </div>
-
-                    <div className="flex gap-4 justify-center">
-                        <Button  className="w-[10rem] flex items-center justify-center text-green-600 hover:text-white font-bold gap-2 border border-gray-300 py-5 bg-white  rounded-lg bg-gradient-to-r hover:from-blue-300 hover:to-indigo-500">
-                            <FaGoogle  className="text-green-600"/> Google
-                        </Button>
-
-                    </div>
-
-                    <p className="text-center text-sm mt-6">
-                        Don’t Have An Account?{" "}
-                        <a href="#" className="text-blue-600 font-medium hover:underline">
-                            Register Now.
-                        </a>
-                    </p>
-
-                    <div className="mt-8 text-xs text-gray-400 flex justify-between">
-                        <span className="text-xs">
-                            © {new Date().getFullYear()} Kreative Rock. All rights reserved.
-                        </span>
-                        <a href="#" className="hover:underline">Privacy Policy</a>
-                    </div>
                 </div>
 
-                {/* Right side - Blue panel */}
-                <div className="hidden md:flex flex-col justify-center items-center bg-orange-400 text-white px-10 ">
-                    <h3 className="text-2xl font-semibold mb-4">
-                        Effortlessly manage your Business operations.
-                    </h3>
 
-                    <p className="text-sm text-900 mb-6 text-center max-w-xs">
-                        Log in to access your Kreative-Rock dashboard and manage your Business.
-                    </p>
-
-                    <Image
-                        src={dashboard} width={300} height={300}
-                        alt="Dashboard preview"
-                        className="w-[90%] rounded-lg shadow-lg"
-                    />
+                <div
+                    className="hidden md:flex flex-col justify-center items-center bg-fit bg-center text-white px-10"
+                    style={{backgroundImage: `url(${bgImage.src})`}}
+                >
+                    {/* Your content here */}
                 </div>
             </div>
         </div>

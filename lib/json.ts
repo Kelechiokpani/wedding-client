@@ -57,6 +57,12 @@ export const mobileSideBar = [
     active_icon: sideIcons.sales_active,
   },
   {
+    label: "Conversational AI",
+    link: "/mobile-texting/conversational-ai",
+    icon: sideIcons.sales,
+    active_icon: sideIcons.sales_active,
+  },
+  {
     label: "Message Draft",
     link: "/mobile-texting/draft",
     icon: sideIcons.sales,

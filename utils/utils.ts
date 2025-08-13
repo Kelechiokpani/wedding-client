@@ -71,7 +71,7 @@ export const currencyToNumber = (currency: string) => {
 
 
 
-export const formatCurrency = (amount: number) => {
+export const formatCurrency = (amount: any) => {
     return new Intl.NumberFormat('en-NG', {
         style: 'currency',
         currency: 'NGN',

@@ -16,7 +16,7 @@ export function SearchInput({
                             }: SearchInputProps) {
     return (
         <div className={`relative ${className}`}>
-            <Search className="absolute left-4 ml-2  top-1/2 transform -translate-y-1/2 h-4 w-4 text-green-500 " />
+            {/*<Search className="absolute left-4 ml-4 mr-4  top-1/2 transform -translate-y-1/2 h-4 w-4 text-green-500 " />*/}
             <Input
                 type="text"
                 placeholder={placeholder}
