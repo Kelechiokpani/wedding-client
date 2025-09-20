@@ -1,28 +1,23 @@
 "use client"
 import bgImage from '@/public/assets/images/wed.webp';
-import {useState} from "react";
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 export default function AlreadyResponded() {
-     
+    
       const { inviteId, name, email } = useParams() as { inviteId?: string, email:string, name:string};
-      const [copied, setCopied] = useState(false);
+    //   const [copied, setCopied] = useState(false);
 
-
-
-    const copyText = (text: string) => {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-        setCopied(true);
-    };
-
-
+    // const copyText = (text: string) => {
+    //     const textarea = document.createElement("textarea");
+    //     textarea.value = text;
+    //     textarea.style.position = "fixed";
+    //     textarea.style.opacity = "0";
+    //     document.body.appendChild(textarea);
+    //     textarea.select();
+    //     document.execCommand("copy");
+    //     document.body.removeChild(textarea);
+    //     setCopied(true);
+    // };
 
     return (
         <div
@@ -53,7 +48,8 @@ export default function AlreadyResponded() {
                             // onClick={() => copyText(inviteId ?? "")}
                             className="inline-flex mt-4 mb-4 items-center justify-center w-full rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 shadow-md disabled:opacity-70"
                         >
-                            {copied ? "Copied!" : "RSVP"}
+                            RSVP
+                            {/* {copied ? "Copied!" : "RSVP"} */}
                           </button>
 
                     {/*{copied && (*/}

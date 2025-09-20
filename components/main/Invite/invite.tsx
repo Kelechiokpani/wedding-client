@@ -1,19 +1,16 @@
 'use client';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { create } from 'zustand';
 import { useParams, useRouter } from 'next/navigation';
 import * as yup from 'yup';
 import bgImage from '@/public/assets/images/wed.webp';
 import TextCarousel from "@/components/main/TextCarousel";
-import AlreadyResponded from "@/components/main/Invite/AlreadyResponded";
-
 
 type Invite = {
     name: string;
     phone: string;
     email: string;
 };
-
 // -------------------- Zustand Store --------------------
 type InviteState = {
     name: string;
@@ -49,18 +46,13 @@ export default function Invite(): JSX.Element {
     const { inviteId } = useParams() as { inviteId?: string };
     const router = useRouter();
     const { name, phone, email, setField } = useInviteStore();
-
-    const [fullName, setFullName] = React.useState("");
-    const [guestId, setGuestID] = React.useState("");
     const [loading, setLoading] = React.useState(false);
     const [statusMessage, setStatusMessage] = React.useState<string | null>(null);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-    const [alreadyAccepted, setAlreadyAccepted] = useState(false);
 
     const handleSubmit = async () => {
         setErrorMessage(null);
         setStatusMessage(null);
-
 
         try {
             // Validate form

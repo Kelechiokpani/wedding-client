@@ -1,11 +1,11 @@
 "use client"
 import React from "react";
-import AcceptInvite from "@/components/main/Invite/AcceptInvite";
+// import AcceptInvite from "@/components/main/Invite/AcceptInvite";
 
 export default function Page() {
     return (
         <div className="">
-            <AcceptInvite/>
+            {/* <AcceptInvite/> */}
         </div>
     );
 }
