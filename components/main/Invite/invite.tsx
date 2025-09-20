@@ -9,24 +9,23 @@ import AlreadyResponded from "@/components/main/Invite/AlreadyResponded";
 
 
 type Invite = {
-    inviteId: string;
     name: string;
     phone: string;
-    status?: string;
+    email: string;
 };
 
 // -------------------- Zustand Store --------------------
 type InviteState = {
     name: string;
     phone: string;
-    // status: string;
+    email: string;
     setField: (field: string, value: string) => void;
 };
 
 const useInviteStore = create<InviteState>((set) => ({
     name: '',
     phone: '',
-    // status: '',
+    email: '',
     setField: (field, value) => set({ [field]: value } as Partial<InviteState>),
 }));
 
@@ -46,10 +45,10 @@ const inviteSchema = yup.object().shape({
 
 
 // -------------------- Component --------------------
-export default function AcceptInvite(): JSX.Element {
+export default function Invite(): JSX.Element {
     const { inviteId } = useParams() as { inviteId?: string };
     const router = useRouter();
-    const { name, phone, setField } = useInviteStore();
+    const { name, phone, email, setField } = useInviteStore();
 
     const [fullName, setFullName] = React.useState("");
     const [guestId, setGuestID] = React.useState("");
@@ -57,32 +56,6 @@ export default function AcceptInvite(): JSX.Element {
     const [statusMessage, setStatusMessage] = React.useState<string | null>(null);
     const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
     const [alreadyAccepted, setAlreadyAccepted] = useState(false);
-    const [error, setError] = useState('');
-
-
-    console.log(error,"error")
-
-    useEffect(() => {
-        if (!inviteId) return;
-
-        (async () => {
-            try {
-                const res = await fetch('https://wedding-server-7gp6.onrender.com/api/send');
-                const data = await res.json();
-                const match = data.find((invite: Invite) => invite.inviteId === inviteId);
-
-                if (match && match.status?.toLowerCase() === 'accepted') {
-                    setAlreadyAccepted(true);
-                    setFullName(match.name)
-                    setGuestID(match.inviteId)
-                }
-            } catch {
-                setError('Error fetching invite data.');
-            } finally {
-                setLoading(false);
-            }
-        })();
-    }, [inviteId]);
 
     const handleSubmit = async () => {
         setErrorMessage(null);
@@ -91,7 +64,7 @@ export default function AcceptInvite(): JSX.Element {
 
         try {
             // Validate form
-            await inviteSchema.validate({ name, phone, status }, { abortEarly: false });
+            await inviteSchema.validate({ name, phone, email }, { abortEarly: false });
 
             if (!inviteId) {
                 setErrorMessage('Invalid invitation link.');
@@ -99,15 +72,15 @@ export default function AcceptInvite(): JSX.Element {
             }
 
             setLoading(true);
-            const res = await fetch(`https://wedding-server-7gp6.onrender.com/api/${inviteId}/accept`, {
+            const res = await fetch(`https://wedding-server-7gp6.onrender.com/api/send`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, phone, status }),
+                body: JSON.stringify({ name, phone, email, inviteId }),
             });
 
             const json = await res.json();
             if (res.ok) {
-                setStatusMessage('Thanks — your response has been recorded.');
+                setStatusMessage('Thanks — your Invitaion and QR details has been sent to your email.');
                 setTimeout(() => router.push('/'), 1200);
             } else {
                 setErrorMessage(json?.message || json?.error || 'Could not submit response. Try again.');
@@ -125,10 +98,6 @@ export default function AcceptInvite(): JSX.Element {
 
     };
 
-    // if (loading) return <div className="p-6 text-center">Loading please wait...</div>;
-    if (alreadyAccepted)
-        return (<AlreadyResponded name={fullName} GuestId={guestId}/>)
-
     return (
         <div>
             <TextCarousel />
@@ -137,7 +106,7 @@ export default function AcceptInvite(): JSX.Element {
                 style={{ backgroundImage: `url(${bgImage.src})` }}
             >
                 <div className="w-full max-w-lg bg-white shadow-md rounded-2xl p-8">
-                    <h1 className="text-2xl font-semibold text-slate-800 mb-1">Wedding Invitation</h1>
+                    <h1 className="text-2xl font-semibold text-slate-800 mb-1">Event Invitation</h1>
                     <p className="text-sm text-slate-500 mb-6">
                         Invitation ID: <span className="font-mono text-slate-700">{inviteId ?? '—'}</span>
                     </p>
@@ -170,20 +139,21 @@ export default function AcceptInvite(): JSX.Element {
                         />
                     </div>
 
-                    {/* Status Dropdown */}
-                    <div className="pb-4">
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Response</label>
-                        <select
-                            value={status}
-                            onChange={(e) => setField('status', e.target.value)}
+
+                 {/* Email */}
+                    <div className="mb-4 mt-4">
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setField('email', e.target.value)}
                             disabled={loading}
                             className="w-full rounded-lg border border-slate-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-300 disabled:opacity-60"
-                        >
-                            <option value="">Select...</option>
-                            <option value="accepted">Accepted</option>
-                            <option value="declined">Declined</option>
-                        </select>
+                            placeholder=" devkelly539@gmail.com"
+                            autoComplete="email"
+                        />
                     </div>
+                
 
                     {/* Submit Button */}
                     <div className="mt-4" >
@@ -229,7 +199,7 @@ export default function AcceptInvite(): JSX.Element {
                     )}
 
                     <p className="text-xs text-slate-400 mt-3">
-                        If you need help, contact <a className="underline">mremmatex@gmail.com</a>.
+                        If you need help, contact <a className="underline">devkelly539@gmail.com</a>.
                     </p>
                 </div>
             </div>

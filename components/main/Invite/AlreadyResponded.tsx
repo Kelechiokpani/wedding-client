@@ -1,9 +1,12 @@
 "use client"
 import bgImage from '@/public/assets/images/wed.webp';
 import {useState} from "react";
+import { useParams, useRouter } from 'next/navigation';
 
-export default function AlreadyResponded({ name, GuestId }: { name: string, GuestId: string }) {
-    const [copied, setCopied] = useState(false);
+export default function AlreadyResponded() {
+     
+      const { inviteId, name, email } = useParams() as { inviteId?: string, email:string, name:string};
+      const [copied, setCopied] = useState(false);
 
 
 
@@ -21,9 +24,6 @@ export default function AlreadyResponded({ name, GuestId }: { name: string, Gues
 
 
 
-
-
-
     return (
         <div
             className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-amber-50 p-6"
@@ -31,24 +31,29 @@ export default function AlreadyResponded({ name, GuestId }: { name: string, Gues
         >
             <div className="bg-white rounded-2xl shadow-md p-8 max-w-lg text-center">
                 <h1 className="text-2xl font-semibold text-slate-800 mb-4">
-                    Response Recorded
+                    Guest Details
                 </h1>
                 <p className="text-slate-600 mb-2">
                     Hello <span className="font-bold">{name}</span>,
                 </p>
 
                 <p className="text-slate-600 mb-2">
-                    Guest -ID <span className="font-bold">{GuestId}</span>,
+                   Email <span className="font-bold">{email}</span>,
+                </p>
+
+
+                <p className="text-slate-600 mb-2">
+                    Guest -ID <span className="font-bold">{inviteId}</span>,
                 </p>
 
                 <p className="text-slate-600 mb-2">
                    Copy Guest ID To Check Them In
                         <button
                             title="Click to copy Guest ID"
-                            onClick={() => copyText(GuestId)}
+                            // onClick={() => copyText(inviteId ?? "")}
                             className="inline-flex mt-4 mb-4 items-center justify-center w-full rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 shadow-md disabled:opacity-70"
                         >
-                            {copied ? "Copied!" : "Copy"}
+                            {copied ? "Copied!" : "RSVP"}
                           </button>
 
                     {/*{copied && (*/}

@@ -13,7 +13,7 @@ export default function TextCarousel() {
         <div className="w-full overflow-hidden bg-yellow-100 border-b border-pink-300">
             <div className="flex whitespace-nowrap animate-marquee">
                 {[...messages, ...messages].map((msg, i) => (
-                    <span key={i} className="mx-8 py-4 text-pink-700 font-medium">
+                    <span key={i} className="mx-8 py-2 text-pink-700 font-medium">
             {msg}
           </span>
                 ))}
